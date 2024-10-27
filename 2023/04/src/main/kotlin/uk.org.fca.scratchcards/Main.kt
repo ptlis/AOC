@@ -15,7 +15,23 @@ fun main () {
         .useLines { it.toSet() }
         .map { parseCardData(it) }
 
-    println("Part1: ${scratchcards.sumOf { it.points }}")
+    println("Part 1: ${scratchcards.sumOf { it.points }}")
+
+    println("Part 2: ${calculateScratchcardCount(scratchcards)}")
+}
+
+fun calculateScratchcardCount(scratchcards: List<Scratchcard>): Int {
+    val cardCounts = scratchcards.associateBy({ it.cardNumber }, { 1 }).toMutableMap()
+    scratchcards.forEach {
+        val winningCount = it.winningOnThisCard.size
+
+        for (i in 1..winningCount) {
+            if (it.cardNumber + i <= scratchcards.size) {
+                cardCounts[it.cardNumber + i] = (cardCounts[it.cardNumber + i] ?: 0) + (cardCounts[it.cardNumber] ?: 0)
+            }
+        }
+    }
+    return cardCounts.values.toList().sum()
 }
 
 fun parseCardData(rawCardData: String): Scratchcard {
