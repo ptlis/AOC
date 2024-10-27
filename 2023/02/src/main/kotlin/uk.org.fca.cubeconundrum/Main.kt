@@ -1,6 +1,7 @@
 package uk.org.fca.cubeconundrum
 
 import java.io.File
+import kotlin.math.max
 
 enum class Color {
     RED,
@@ -8,6 +9,7 @@ enum class Color {
     BLUE
 }
 
+typealias MinimumColours = Map<Color, Int>
 typealias ColorCount = Pair<Color, Int>
 typealias Draw = List<ColorCount>
 typealias Draws = List<Draw>
@@ -20,13 +22,26 @@ val colourLimits = mapOf(
 )
 
 fun main () {
-    println(
-        File("data/games")
-            .useLines { it.toList() }
-            .map { parseGameData(it) }
-            .filter { isGamePossible(it) }
-            .sumOf { it.first }
-    )
+    val games = File("data/games")
+        .useLines { it.toList() }
+        .map { parseGameData(it) }
+
+    println("Part 1: ${games.filter { isGamePossible(it) }.sumOf { it.first }}")
+    println("Part 2: ${games.sumOf { calculatePower(it) }}")
+}
+
+fun calculatePower(game: Game): Int {
+    return calculateMinColoursCount(game).values.reduce { acc, next -> acc * next }
+}
+
+fun calculateMinColoursCount(game: Game): MinimumColours {
+    return game.second
+        .flatten()
+        .fold(mutableMapOf(Color.RED to 0, Color.BLUE to 0, Color.GREEN to 0)) {
+            acc, next ->
+                acc[next.first] = max(acc[next.first] ?: 0, + next.second)
+                acc
+            }
 }
 
 fun isDrawPossible(draw: Draw): Boolean = !draw.any { it.second > colourLimits[it.first]!! }
