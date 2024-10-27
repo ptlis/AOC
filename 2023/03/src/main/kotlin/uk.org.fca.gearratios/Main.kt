@@ -7,18 +7,32 @@ import kotlin.math.min
 data class Coord(val x: Int, val y: Int)
 data class Symbol(val position: Coord, val symbol: Char)
 data class PartNumber(val startCoord: Coord, val number: Int, val symbol: Symbol)
+data class Cog(val partNumbers: List<PartNumber>) {
+    val ratio
+        get() = this.partNumbers.fold(1) { acc, next -> acc * next.number }
+}
 
 fun main () {
     val engine = File("data/engine")
         .useLines { it.toList() }
         .map { it.toCharArray() }
 
-    println(findPartNumbers(engine).sumOf { it.number })
+    val partNumbers = findPartNumbers(engine)
+
+    println("Part 1: ${partNumbers.sumOf { it.number }}")
+
+    println("Part 2: ${findCogs(partNumbers).sumOf { it.ratio }}")
 }
 
-fun findPartNumbers(engine: List<CharArray>): List<PartNumber> {
-    return findSymbols(engine).map { findPartNumbersBySymbol(engine, it) }.flatten()
-}
+fun findCogs(partNumbers: List<PartNumber>): List<Cog> =
+    partNumbers
+        .filter { it.symbol.symbol == '*' }
+        .groupBy({"${it.symbol.position.x},${it.symbol.position.y}"}) { it }
+        .filter { it.value.size > 1 }
+        .map { Cog(it.value) }
+
+fun findPartNumbers(engine: List<CharArray>): List<PartNumber> =
+    findSymbols(engine).map { findPartNumbersBySymbol(engine, it) }.flatten()
 
 fun findPartNumber(engineLine: CharArray, symbol: Symbol, numberFoundPosition: Coord): PartNumber {
     var startX = numberFoundPosition.x
