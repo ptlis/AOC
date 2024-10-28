@@ -88,6 +88,20 @@ data class Almanac(
     fun mapRangeToSmallestValue(start: BigInteger, length: BigInteger, mapper: List<Range>): Range {
         return seedToSoil.filter { start in it.sourceStart..it.sourceEnd }.first()
     }
+
+    fun mapSeedRangeToSmallestLocation(seedStart: BigInteger, length: BigInteger): BigInteger {
+
+        val soilRange = mapRangeToSmallestValue(seedStart, length, seedToSoil)
+
+
+
+        val fertilizerRange = mapRangeToSmallestValue(soilRange.sourceStart, soilRange.size, soilToFertilizer)
+        val waterRange = mapRangeToSmallestValue(fertilizerRange.sourceStart, fertilizerRange.size, fertilizerToWater)
+        val lightRange = mapRangeToSmallestValue(waterRange.sourceStart, waterRange.size, waterToLight)
+        val temperatureRange = mapRangeToSmallestValue(lightRange.sourceStart, lightRange.size, lightToTemperature)
+        val humidityRange = mapRangeToSmallestValue(temperatureRange.sourceStart, temperatureRange.size, temperatureToHumidity)
+        return mapRangeToSmallestValue(humidityRange.sourceStart, humidityRange.size, humidityToLocation).destinationStart
+    }
 }
 
 data class Range(val destinationStart: BigInteger, val sourceStart: BigInteger, val size: BigInteger) {

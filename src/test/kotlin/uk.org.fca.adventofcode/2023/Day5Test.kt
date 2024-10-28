@@ -72,4 +72,19 @@ class Day5Test {
 
         assertEquals(expected, testAlmanac.mapSeedToLocation(input))
     }
+
+    @Test
+    fun testPart1Example4() {
+        val input = BigInteger.valueOf(13)
+        val expected = BigInteger.valueOf(35)
+
+        assertEquals(expected, testAlmanac.mapSeedToLocation(input))
+    }
+
+//    @Test
+//    fun testPart2Example1() {
+//        val expected = BigInteger.valueOf(35)
+//
+//        assertEquals(expected, testAlmanac.mapSeedRangeToSmallestLocation(BigInteger.valueOf(79), BigInteger.valueOf(14)))
+//    }
 }
