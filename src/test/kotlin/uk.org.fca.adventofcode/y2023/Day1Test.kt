@@ -1,9 +1,7 @@
-package uk.org.fca.adventofcode.`2023`
+package uk.org.fca.adventofcode.y2023
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import uk.org.fca.adventofcode.`2023`.calibrate
-import uk.org.fca.adventofcode.`2023`.getDigits
 
 class Day1Test {
     @Test

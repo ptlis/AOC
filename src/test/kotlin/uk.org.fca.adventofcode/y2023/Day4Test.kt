@@ -1,4 +1,4 @@
-package uk.org.fca.adventofcode.`2023`
+package uk.org.fca.adventofcode.y2023
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

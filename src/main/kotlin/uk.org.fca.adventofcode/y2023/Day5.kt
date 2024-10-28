@@ -1,4 +1,4 @@
-package uk.org.fca.adventofcode.`2023`
+package uk.org.fca.adventofcode.y2023
 
 import uk.org.fca.adventofcode.Day
 import java.math.BigInteger
