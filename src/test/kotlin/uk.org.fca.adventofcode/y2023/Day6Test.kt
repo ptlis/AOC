@@ -1,5 +1,7 @@
 package uk.org.fca.adventofcode.y2023
 
+import uk.org.fca.adventofcode.y2023.day6.RaceResult
+import uk.org.fca.adventofcode.y2023.day6.RaceResults
 import java.math.BigInteger
 import kotlin.test.Test
 import kotlin.test.assertEquals
