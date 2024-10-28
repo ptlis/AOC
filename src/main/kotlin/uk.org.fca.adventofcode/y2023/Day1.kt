@@ -27,7 +27,7 @@ class Day1: Day {
 }
 
 fun calibrate(calibrationData: List<String>, handleStringNumbers: Boolean): Int
-        = calibrationData.map { getDigits(it, handleStringNumbers) }.sum()
+        = calibrationData.sumOf { getDigits(it, handleStringNumbers) }
 
 fun getDigits(calibrationLine: String, handleStringNumbers: Boolean): Int {
     val firstDigit = findFirstDigit(calibrationLine, digitMap, handleStringNumbers)
