@@ -1,7 +1,7 @@
 package uk.org.fca.adventofcode.`2023`
 
-import uk.org.fca.adventofcode.Part1
-import uk.org.fca.adventofcode.Part2
+import uk.org.fca.adventofcode.Day
+import java.math.BigInteger
 
 data class Scratchcard(val cardNumber: Int, val winningNumbers: Set<Int>, val cardNumbers: Set<Int>) {
     val winningOnThisCard
@@ -11,12 +11,13 @@ data class Scratchcard(val cardNumber: Int, val winningNumbers: Set<Int>, val ca
         get() = winningOnThisCard.fold(1) { acc, _ -> acc * 2 } / 2
 }
 
-class Day4: Part1, Part2 {
-    override fun part1Solution(data: List<String>): Int {
-        return data.map { parseCardData(it) }.sumOf { it.points }}
+class Day4: Day {
+    override fun part1Solution(data: List<String>): BigInteger {
+        return data.map { parseCardData(it) }.sumOf { it.points }.toBigInteger()
+    }
 
-    override fun part2Solution(data: List<String>): Int {
-        return calculateScratchcardCount(data.map { parseCardData(it) })
+    override fun part2Solution(data: List<String>): BigInteger {
+        return calculateScratchcardCount(data.map { parseCardData(it) }).toBigInteger()
     }
 }
 

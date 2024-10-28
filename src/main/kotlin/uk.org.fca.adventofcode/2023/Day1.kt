@@ -1,7 +1,7 @@
 package uk.org.fca.adventofcode.`2023`
 
-import uk.org.fca.adventofcode.Part1
-import uk.org.fca.adventofcode.Part2
+import uk.org.fca.adventofcode.Day
+import java.math.BigInteger
 import kotlin.math.min
 
 val digitMap = mapOf(
@@ -16,13 +16,13 @@ val digitMap = mapOf(
     "nine" to 9
 )
 
-class Day1: Part1, Part2 {
-    override fun part1Solution(data: List<String>): Int {
-        return calibrate(data, false)
+class Day1: Day {
+    override fun part1Solution(data: List<String>): BigInteger {
+        return calibrate(data, false).toBigInteger()
     }
 
-    override fun part2Solution(data: List<String>): Int {
-        return calibrate(data, true)
+    override fun part2Solution(data: List<String>): BigInteger {
+        return calibrate(data, true).toBigInteger()
     }
 }
 

@@ -1,7 +1,7 @@
 package uk.org.fca.adventofcode.`2023`
 
-import uk.org.fca.adventofcode.Part1
-import uk.org.fca.adventofcode.Part2
+import uk.org.fca.adventofcode.Day
+import java.math.BigInteger
 import kotlin.math.max
 import kotlin.math.min
 
@@ -13,13 +13,13 @@ data class Cog(val partNumbers: List<PartNumber>) {
         get() = this.partNumbers.fold(1) { acc, next -> acc * next.number }
 }
 
-class Day3: Part1, Part2 {
-    override fun part1Solution(data: List<String>): Int {
-        return findPartNumbers(data.map { it.toCharArray() }).sumOf { it.number }
+class Day3: Day {
+    override fun part1Solution(data: List<String>): BigInteger {
+        return findPartNumbers(data.map { it.toCharArray() }).sumOf { it.number }.toBigInteger()
     }
 
-    override fun part2Solution(data: List<String>): Int {
-        return findCogs(findPartNumbers(data.map { it.toCharArray() })).sumOf { it.ratio }
+    override fun part2Solution(data: List<String>): BigInteger {
+        return findCogs(findPartNumbers(data.map { it.toCharArray() })).sumOf { it.ratio }.toBigInteger()
     }
 }
 

@@ -1,34 +1,37 @@
 package uk.org.fca.adventofcode
 
-import uk.org.fca.adventofcode.`2023`.Day1
-import uk.org.fca.adventofcode.`2023`.Day2
-import uk.org.fca.adventofcode.`2023`.Day3
-import uk.org.fca.adventofcode.`2023`.Day4
+import uk.org.fca.adventofcode.`2023`.*
+import java.math.BigInteger
+import kotlin.time.measureTime
 
 fun main () {
-    val day1Data = object {}.javaClass.getResourceAsStream("/2023/day1")?.bufferedReader()?.readLines() ?: listOf()
-    val day1 = Day1()
+    runDays(mapOf(
+        1 to Day1(),
+        2 to Day2(),
+        3 to Day3(),
+        4 to Day4(),
+    ))
+}
 
-    println("Day 1 Part 1: ${day1.part1Solution(day1Data)}")
-    println("Day 1 Part 2: ${day1.part2Solution(day1Data)}")
+fun runDays(days: Map<Int, Day>) {
+    for (entry in days.entries) {
+        runDay(entry.key, entry.value)
+    }
+}
 
-    val day2Data = object {}.javaClass.getResourceAsStream("/2023/day2")?.bufferedReader()?.readLines() ?: listOf()
-    val day2 = Day2()
+fun runDay(dayNumber: Int, day: Day) {
+    val dayData = object {}.javaClass.getResourceAsStream("/2023/day$dayNumber")?.bufferedReader()?.readLines() ?: listOf()
 
-    println("Day 2 Part 1: ${day2.part1Solution(day2Data)}")
-    println("Day 2 Part 2: ${day2.part2Solution(day2Data)}")
+    var part1Solution: BigInteger
+    val part1ExecutionTime = measureTime{
+        part1Solution = day.part1Solution(dayData)
+    }
 
+    var part2Solution: BigInteger
+    val part2ExecutionTime = measureTime{
+        part2Solution = day.part2Solution(dayData)
+    }
 
-    val day3Data = object {}.javaClass.getResourceAsStream("/2023/day3")?.bufferedReader()?.readLines() ?: listOf()
-    val day3 = Day3()
-
-    println("Day 3 Part 1: ${day3.part1Solution(day3Data)}")
-    println("Day 3 Part 2: ${day3.part2Solution(day3Data)}")
-
-
-    val day4Data = object {}.javaClass.getResourceAsStream("/2023/day4")?.bufferedReader()?.readLines() ?: listOf()
-    val day4 = Day4()
-
-    println("Day 4 Part 1: ${day4.part1Solution(day4Data)}")
-    println("Day 4 Part 2: ${day4.part2Solution(day4Data)}")
+    println("Day $dayNumber Part 1: ${part1Solution.toString().padEnd(15)} ($part1ExecutionTime)")
+    println("Day $dayNumber Part 2: ${part2Solution.toString().padEnd(15)} ($part2ExecutionTime)")
 }

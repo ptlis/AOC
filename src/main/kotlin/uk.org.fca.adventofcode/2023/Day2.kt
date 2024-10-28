@@ -1,7 +1,7 @@
 package uk.org.fca.adventofcode.`2023`
 
-import uk.org.fca.adventofcode.Part1
-import uk.org.fca.adventofcode.Part2
+import uk.org.fca.adventofcode.Day
+import java.math.BigInteger
 import kotlin.math.max
 
 enum class Color {
@@ -22,13 +22,13 @@ val colourLimits = mapOf(
     Color.BLUE to 14
 )
 
-class Day2: Part1, Part2 {
-    override fun part1Solution(data: List<String>): Int {
-        return data.map { parseGameData(it) }.filter { isGamePossible(it) }.sumOf { it.first }
+class Day2: Day {
+    override fun part1Solution(data: List<String>): BigInteger {
+        return data.map { parseGameData(it) }.filter { isGamePossible(it) }.sumOf { it.first }.toBigInteger()
     }
 
-    override fun part2Solution(data: List<String>): Int {
-        return data.map { parseGameData(it) }.sumOf { calculatePower(it) }
+    override fun part2Solution(data: List<String>): BigInteger {
+        return data.map { parseGameData(it) }.sumOf { calculatePower(it) }.toBigInteger()
     }
 }
 
