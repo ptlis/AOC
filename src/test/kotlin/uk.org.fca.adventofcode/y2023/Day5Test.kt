@@ -1,12 +1,13 @@
 package uk.org.fca.adventofcode.y2023
 
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.datatest.withData
+import io.kotest.matchers.equals.shouldBeEqual
 import uk.org.fca.adventofcode.y2023.day5.Almanac
 import java.math.BigInteger
-import kotlin.test.Test
-import kotlin.test.assertEquals
 
-class Day5Test {
-    private val testAlmanac = Almanac.parse("""
+class Day5Test: FunSpec({
+    val testAlmanac = Almanac.parse("""
         seeds: 79 14 55 13
 
         seed-to-soil map:
@@ -42,50 +43,21 @@ class Day5Test {
         56 93 4
     """.trimIndent().lines())
 
-    @Test
-    fun testMapSeedToSoil() {
-        val input = BigInteger.valueOf(53)
-        val expected = BigInteger.valueOf(55)
+    context("Part 1") {
+        test("map seed to soil") {
+            testAlmanac.mapValue(BigInteger.valueOf(53), testAlmanac.seedToSoil) shouldBeEqual BigInteger.valueOf(55)
+        }
 
-        assertEquals(expected, testAlmanac.mapValue(input, testAlmanac.seedToSoil))
+        context("map seeds to location") {
+            withData(mapOf(
+                "Seed 79 to location 82" to Pair(BigInteger.valueOf(79), BigInteger.valueOf(82)),
+                "Seed 14 to location 43" to Pair(BigInteger.valueOf(14), BigInteger.valueOf(43)),
+                "Seed 55 to location 86" to Pair(BigInteger.valueOf(55), BigInteger.valueOf(86)),
+                "Seed 12 to location 35" to Pair(BigInteger.valueOf(13), BigInteger.valueOf(35)),
+            )
+            ) {
+                values -> testAlmanac.mapSeedToLocation(values.first) shouldBeEqual values.second
+            }
+        }
     }
-
-    @Test
-    fun testPart1Example1() {
-        val input = BigInteger.valueOf(79)
-        val expected = BigInteger.valueOf(82)
-
-        assertEquals(expected, testAlmanac.mapSeedToLocation(input))
-    }
-
-    @Test
-    fun testPart1Example2() {
-        val input = BigInteger.valueOf(14)
-        val expected = BigInteger.valueOf(43)
-
-        assertEquals(expected, testAlmanac.mapSeedToLocation(input))
-    }
-
-    @Test
-    fun testPart1Example3() {
-        val input = BigInteger.valueOf(55)
-        val expected = BigInteger.valueOf(86)
-
-        assertEquals(expected, testAlmanac.mapSeedToLocation(input))
-    }
-
-    @Test
-    fun testPart1Example4() {
-        val input = BigInteger.valueOf(13)
-        val expected = BigInteger.valueOf(35)
-
-        assertEquals(expected, testAlmanac.mapSeedToLocation(input))
-    }
-
-//    @Test
-//    fun testPart2Example1() {
-//        val expected = BigInteger.valueOf(35)
-//
-//        assertEquals(expected, testAlmanac.mapSeedRangeToSmallestLocation(BigInteger.valueOf(79), BigInteger.valueOf(14)))
-//    }
-}
+})

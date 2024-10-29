@@ -23,9 +23,6 @@ enum class HandType {
     },
     HIGH_CARD {
         override val rank = 1
-    },
-    NOTHING_SPECIAL {
-        override val rank = 0
     };
 
     abstract val rank: Int
@@ -103,7 +100,7 @@ data class Hand(val cards: List<Card>, val bid: Int): Comparable<Hand> {
     val type get(): HandType {
         val groupedCards = cards.groupBy { it }.values.toList().sortedBy { it.size }.reversed()
 
-        return when (true) {
+        return when {
             // Five of a kind, where all five cards have the same label: AAAAA
             (groupedCards.size == 1) -> HandType.FIVE_OF_A_KIND
 
@@ -127,10 +124,7 @@ data class Hand(val cards: List<Card>, val bid: Int): Comparable<Hand> {
             (groupedCards.size == 4) -> HandType.ONE_PAIR
 
             // High card, where all cards' labels are distinct: 23456
-            (groupedCards.size == 5) -> HandType.HIGH_CARD
-
-            // Not any special kind of hand
-            else -> HandType.NOTHING_SPECIAL
+            else -> HandType.HIGH_CARD
         }
     }
 

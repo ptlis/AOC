@@ -16,7 +16,7 @@ val digitMap = mapOf(
     "nine" to 9
 )
 
-class Day1: Day {
+class Day1: Day() {
     override fun part1Solution(data: List<String>): BigInteger {
         return calibrate(data, false).toBigInteger()
     }

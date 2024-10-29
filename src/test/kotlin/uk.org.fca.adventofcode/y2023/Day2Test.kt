@@ -1,324 +1,212 @@
 package uk.org.fca.adventofcode.y2023
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.datatest.withData
+import io.kotest.matchers.equals.shouldBeEqual
+import uk.org.fca.adventofcode.y2023.day2.ColourCount
+import uk.org.fca.adventofcode.y2023.day2.Draw
+import uk.org.fca.adventofcode.y2023.day2.Game
 
-class Day2Test {
-    @Test
-    fun testParseColourCount() {
-        val input = "7 blue"
-        val expected = Pair(Color.BLUE, 7)
+class Day2Test: FunSpec({
+    val colourLimits = mapOf(
+        ColourCount.Colour.RED to 12,
+        ColourCount.Colour.GREEN to 13,
+        ColourCount.Colour.BLUE to 14
+    )
 
-        assertEquals(expected, parseColorCount(input))
-    }
+    context("Part 1") {
+        test("Parse colour count") {
+            ColourCount.parse("7 blue") shouldBeEqual ColourCount(7, ColourCount.Colour.BLUE)
+        }
 
-    @Test
-    fun testParseDrawColours() {
-        val input = "3 green, 2 blue, 5 red"
-        val expected = listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 2), Pair(Color.RED, 5))
+        test("Parse draw") {
+            val draw = Draw.parse("3 green, 2 blue, 5 red")
+            draw shouldBeEqual Draw(listOf(
+                ColourCount(3, ColourCount.Colour.GREEN),
+                ColourCount(2, ColourCount.Colour.BLUE),
+                ColourCount(5, ColourCount.Colour.RED)
+            ))
+        }
 
-        assertEquals(expected, parseDrawColors(input))
-    }
-
-    @Test
-    fun testParseDraws() {
-        val input = "3 green, 2 blue, 5 red; 2 red, 3 blue; 1 green"
-        val expected = listOf(
-            listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 2), Pair(Color.RED, 5)),
-            listOf(Pair(Color.RED, 2), Pair(Color.BLUE, 3)),
-            listOf(Pair(Color.GREEN, 1))
-        )
-
-        assertEquals(expected, parseDraws(input))
-    }
-
-    @Test
-    fun testParseExample1Game1() {
-        val input = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-        val expected = Pair(1, listOf(
-            listOf(Pair(Color.BLUE, 3), Pair(Color.RED, 4)),
-            listOf(Pair(Color.RED, 1), Pair(Color.GREEN, 2), Pair(Color.BLUE, 6)),
-            listOf(Pair(Color.GREEN, 2))
-        ))
-
-        assertEquals(expected, parseGameData(input))
-    }
-
-    @Test
-    fun testIsDrawPossible1() {
-        val input = listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 2), Pair(Color.RED, 5))
-        val expected = true
-
-        assertEquals(expected, isDrawPossible(input))
-    }
-
-    @Test
-    fun testIsDrawPossible2() {
-        val input = listOf(Pair(Color.BLUE, 5), Pair(Color.GREEN, 20), Pair(Color.GREEN, 9))
-        val expected = false
-
-        assertEquals(expected, isDrawPossible(input))
-    }
-
-    @Test
-    fun testAreDrawsPossible1() {
-        val input = listOf(
-            listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 2), Pair(Color.RED, 5)),
-            listOf(Pair(Color.RED, 2), Pair(Color.BLUE, 3)),
-            listOf(Pair(Color.GREEN, 1))
-        )
-        val expected = true
-
-        assertEquals(expected, areDrawsPossible(input))
-    }
-
-    @Test
-    fun testAreDrawsPossible2() {
-        val input = listOf(
-            listOf(Pair(Color.RED, 2), Pair(Color.BLUE, 3)),
-            listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 30), Pair(Color.RED, 5)),
-            listOf(Pair(Color.GREEN, 1))
-        )
-        val expected = false
-
-        assertEquals(expected, areDrawsPossible(input))
-    }
-
-    @Test
-    fun testIsGamePossible1() {
-        val input = Pair(
-            11,
-            listOf(
-                listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 3), Pair(Color.RED, 5)),
-                listOf(Pair(Color.RED, 2), Pair(Color.BLUE, 3)),
-                listOf(Pair(Color.GREEN, 1))
+        test("Parse draws") {
+            val draws = Draw.parseDraws("3 green, 2 blue, 5 red; 2 red, 3 blue; 1 green")
+            draws shouldBeEqual listOf(
+                Draw(listOf(
+                    ColourCount(3, ColourCount.Colour.GREEN),
+                    ColourCount(2, ColourCount.Colour.BLUE),
+                    ColourCount(5, ColourCount.Colour.RED)
+                )),
+                Draw(listOf(
+                    ColourCount(2, ColourCount.Colour.RED),
+                    ColourCount(3, ColourCount.Colour.BLUE)
+                )),
+                Draw(listOf(ColourCount(1, ColourCount.Colour.GREEN)))
             )
-        )
-        val expected = true
+        }
 
-        assertEquals(expected, isGamePossible(input))
+        test("Parse game") {
+            val game = Game.parse("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green")
+
+            game shouldBeEqual Game(1, listOf(
+                Draw(listOf(
+                    ColourCount(3, ColourCount.Colour.BLUE),
+                    ColourCount(4, ColourCount.Colour.RED)
+                )),
+                Draw(listOf(
+                    ColourCount(1, ColourCount.Colour.RED),
+                    ColourCount(2, ColourCount.Colour.GREEN),
+                    ColourCount(6, ColourCount.Colour.BLUE)
+                )),
+                Draw(listOf(ColourCount(2, ColourCount.Colour.GREEN)))
+            ))
+        }
+
+        context("test is draw possible") {
+            withData(mapOf(
+                "Draw 1" to Pair(
+                    Draw(listOf(
+                        ColourCount(3, ColourCount.Colour.GREEN),
+                        ColourCount(2, ColourCount.Colour.BLUE),
+                        ColourCount(5, ColourCount.Colour.RED)
+                    )),
+                    true
+                ),
+                "Draw 2" to Pair(
+                    Draw(listOf(
+                        ColourCount(20, ColourCount.Colour.GREEN),
+                        ColourCount(5, ColourCount.Colour.BLUE),
+                        ColourCount(9, ColourCount.Colour.RED)
+                    )),
+                    false
+                )
+            )) {
+                data -> data.first.isPossible(colourLimits) shouldBeEqual data.second
+            }
+        }
+
+        context("test is game possible") {
+            withData(mapOf(
+                "Game 11" to Pair(
+                    Game(11, listOf(
+                        Draw(listOf(
+                            ColourCount(3, ColourCount.Colour.GREEN),
+                            ColourCount(3, ColourCount.Colour.BLUE),
+                            ColourCount(5, ColourCount.Colour.RED)
+                        )),
+                        Draw(listOf(
+                            ColourCount(2, ColourCount.Colour.RED),
+                            ColourCount(3, ColourCount.Colour.BLUE),
+                        )),
+                        Draw(listOf(ColourCount(1, ColourCount.Colour.GREEN)))
+                    )),
+                    true
+                ),
+                "Game 19" to Pair(
+                    Game(19, listOf(
+                        Draw(listOf(
+                            ColourCount(3, ColourCount.Colour.GREEN),
+                            ColourCount(30, ColourCount.Colour.BLUE),
+                            ColourCount(5, ColourCount.Colour.RED)
+                        )),
+                        Draw(listOf(
+                            ColourCount(2, ColourCount.Colour.RED),
+                            ColourCount(99, ColourCount.Colour.BLUE),
+                        )),
+                        Draw(listOf(ColourCount(1, ColourCount.Colour.GREEN)))
+                    )),
+                    false
+                )
+            )) {
+                data -> data.first.isPossible(colourLimits) shouldBeEqual data.second
+            }
+        }
+
+        context("Test game is possible") {
+            withData(mapOf(
+                "Game 1" to Pair(Game.parse("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"), true),
+                "Game 2" to Pair(Game.parse("Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue"), true),
+                "Game 3" to Pair(Game.parse("Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"), false),
+                "Game 4" to Pair(Game.parse( "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red"), false),
+                "Game 5" to Pair(Game.parse("Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"), true)
+            )) {
+                data -> data.first.isPossible(colourLimits) shouldBeEqual data.second
+            }
+        }
     }
 
-    @Test
-    fun testIsGamePossible2() {
-        val input = Pair(
-            11,
-            listOf(
-                listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 30), Pair(Color.RED, 5)),
-                listOf(Pair(Color.RED, 2), Pair(Color.BLUE, 99)),
-                listOf(Pair(Color.GREEN, 1))
-            )
-        )
-        val expected = false
+    context("Part 2") {
+        context("Test get minimum colours count") {
+            withData(mapOf(
+                "Game 1" to Pair(
+                    Game.parse("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"),
+                    mapOf(
+                        ColourCount.Colour.RED to 4,
+                        ColourCount.Colour.GREEN to 2,
+                        ColourCount.Colour.BLUE to 6
+                    )
+                ),
+                "Game 2" to Pair(
+                    Game.parse("Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue"),
+                    mapOf(
+                        ColourCount.Colour.RED to 1,
+                        ColourCount.Colour.GREEN to 3,
+                        ColourCount.Colour.BLUE to 4
+                    )
+                ),
+                "Game 3" to Pair(
+                    Game.parse("Game 3: 3 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"),
+                    mapOf(
+                        ColourCount.Colour.RED to 20,
+                        ColourCount.Colour.GREEN to 13,
+                        ColourCount.Colour.BLUE to 6
+                    )
+                ),
+                "Game 4" to Pair(
+                    Game.parse("Game 4: 1 green, 3 red, 6 blue; 6 red, 3 green; 3 green, 15 blue, 14 red"),
+                    mapOf(
+                        ColourCount.Colour.RED to 14,
+                        ColourCount.Colour.GREEN to 3,
+                        ColourCount.Colour.BLUE to 15
+                    )
+                ),
+                "Game 5" to Pair(
+                    Game.parse("Game 5: 3 green, 6 red, 1 blue; 1 red, 2 green, 2 blue"),
+                    mapOf(
+                        ColourCount.Colour.RED to 6,
+                        ColourCount.Colour.GREEN to 3,
+                        ColourCount.Colour.BLUE to 2
+                    )
+                )
+            )) {
+                data -> data.first.minimumColoursCount shouldBeEqual data.second
+            }
+        }
 
-        assertEquals(expected, isGamePossible(input))
+        context("Test calculate power") {
+            withData(mapOf(
+                "Game 1" to Pair(
+                    Game.parse("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"),
+                    48
+                ),
+                "Game 2" to Pair(
+                    Game.parse("Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue"),
+                    12
+                ),
+                "Game 3" to Pair(
+                    Game.parse("Game 3: 3 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"),
+                    1560
+                ),
+                "Game 4" to Pair(
+                    Game.parse("Game 4: 1 green, 3 red, 6 blue; 6 red, 3 green; 3 green, 15 blue, 14 red"),
+                    630
+                ),
+                "Game 5" to Pair(
+                    Game.parse("Game 5: 3 green, 6 red, 1 blue; 1 red, 2 green, 2 blue"),
+                    36
+                )
+            )) {
+                    data -> data.first.power shouldBeEqual data.second
+            }
+        }
     }
-
-    @Test
-    fun testOneGameIsPossibleExample1Game1() {
-        val input = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-        val expected = true
-
-        assertEquals(expected, isGamePossible(parseGameData(input)))
-    }
-
-    @Test
-    fun testOneGameIsPossibleExample1Game2() {
-        val input = "Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue"
-        val expected = true
-
-        assertEquals(expected, isGamePossible(parseGameData(input)))
-    }
-
-    @Test
-    fun testOneGameIsPossibleExample1Game3() {
-        val input = "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
-        val expected = false
-
-        assertEquals(expected, isGamePossible(parseGameData(input)))
-    }
-
-    @Test
-    fun testOneGameIsPossibleExample1Game4() {
-        val input = "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red"
-        val expected = false
-
-        assertEquals(expected, isGamePossible(parseGameData(input)))
-    }
-
-    @Test
-    fun testOneGameIsPossibleExample1Game5() {
-        val input = "Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"
-        val expected = true
-
-        assertEquals(expected, isGamePossible(parseGameData(input)))
-    }
-
-    @Test
-    fun testCalculateMinColoursCountExample2Game1() {
-        val input = Pair(
-            1,
-            listOf(
-                listOf(Pair(Color.BLUE, 3), Pair(Color.RED, 4)),
-                listOf(Pair(Color.RED, 1), Pair(Color.GREEN, 2), Pair(Color.BLUE, 6)),
-                listOf(Pair(Color.GREEN, 2)),
-            )
-        )
-        val expected = mapOf(
-            Color.RED to 4,
-            Color.GREEN to 2,
-            Color.BLUE to 6
-        )
-
-        assertEquals(expected, calculateMinColoursCount(input))
-    }
-
-    @Test
-    fun testCalculateMinColoursCountExample2Game2() {
-        val input = Pair(
-            2,
-            listOf(
-                listOf(Pair(Color.BLUE, 1), Pair(Color.GREEN, 2)),
-                listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 4), Pair(Color.RED, 1)),
-                listOf(Pair(Color.GREEN, 1), Pair(Color.BLUE, 1)),
-            )
-        )
-        val expected = mapOf(
-            Color.RED to 1,
-            Color.GREEN to 3,
-            Color.BLUE to 4
-        )
-
-        assertEquals(expected, calculateMinColoursCount(input))
-    }
-
-    @Test
-    fun testCalculateMinColoursCountExample2Game3() {
-        val input = Pair(
-            3,
-            listOf(
-                listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 6), Pair(Color.RED, 20)),
-                listOf(Pair(Color.BLUE, 5), Pair(Color.RED, 4), Pair(Color.GREEN, 13)),
-                listOf(Pair(Color.GREEN, 5), Pair(Color.RED, 1)),
-            )
-        )
-        val expected = mapOf(
-            Color.RED to 20,
-            Color.GREEN to 13,
-            Color.BLUE to 6
-        )
-
-        assertEquals(expected, calculateMinColoursCount(input))
-    }
-
-    @Test
-    fun testCalculateMinColoursCountExample2Game4() {
-        val input = Pair(
-            4,
-            listOf(
-                listOf(Pair(Color.GREEN, 1), Pair(Color.RED, 3), Pair(Color.BLUE, 6)),
-                listOf(Pair(Color.RED, 6), Pair(Color.GREEN, 3)),
-                listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 15), Pair(Color.RED, 14)),
-            )
-        )
-        val expected = mapOf(
-            Color.RED to 14,
-            Color.GREEN to 3,
-            Color.BLUE to 15
-        )
-
-        assertEquals(expected, calculateMinColoursCount(input))
-    }
-
-    @Test
-    fun testCalculateMinColoursCountExample2Game5() {
-        val input = Pair(
-            5,
-            listOf(
-                listOf(Pair(Color.GREEN, 3), Pair(Color.RED, 6), Pair(Color.BLUE, 1)),
-                listOf(Pair(Color.RED, 1), Pair(Color.GREEN, 2), Pair(Color.BLUE, 2)),
-            )
-        )
-        val expected = mapOf(
-            Color.RED to 6,
-            Color.GREEN to 3,
-            Color.BLUE to 2
-        )
-
-        assertEquals(expected, calculateMinColoursCount(input))
-    }
-
-    @Test
-    fun testCalculatePowerExample2Game1() {
-        val input = Pair(
-            1,
-            listOf(
-                listOf(Pair(Color.BLUE, 3), Pair(Color.RED, 4)),
-                listOf(Pair(Color.RED, 1), Pair(Color.GREEN, 2), Pair(Color.BLUE, 6)),
-                listOf(Pair(Color.GREEN, 2)),
-            )
-        )
-        val expected = 48
-
-        assertEquals(expected, calculatePower(input))
-    }
-
-    @Test
-    fun testCalculatePowerExample2Game2() {
-        val input = Pair(
-            2,
-            listOf(
-                listOf(Pair(Color.BLUE, 1), Pair(Color.GREEN, 2)),
-                listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 4), Pair(Color.RED, 1)),
-                listOf(Pair(Color.GREEN, 1), Pair(Color.BLUE, 1)),
-            )
-        )
-        val expected = 12
-
-        assertEquals(expected, calculatePower(input))
-    }
-
-    @Test
-    fun testCalculatePowerExample2Game3() {
-        val input = Pair(
-            3,
-            listOf(
-                listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 6), Pair(Color.RED, 20)),
-                listOf(Pair(Color.BLUE, 5), Pair(Color.RED, 4), Pair(Color.GREEN, 13)),
-                listOf(Pair(Color.GREEN, 5), Pair(Color.RED, 1)),
-            )
-        )
-        val expected = 1560
-
-        assertEquals(expected, calculatePower(input))
-    }
-
-    @Test
-    fun testCalculatePowerExample2Game4() {
-        val input = Pair(
-            4,
-            listOf(
-                listOf(Pair(Color.GREEN, 1), Pair(Color.RED, 3), Pair(Color.BLUE, 6)),
-                listOf(Pair(Color.RED, 6), Pair(Color.GREEN, 3)),
-                listOf(Pair(Color.GREEN, 3), Pair(Color.BLUE, 15), Pair(Color.RED, 14)),
-            )
-        )
-        val expected = 630
-
-        assertEquals(expected, calculatePower(input))
-    }
-
-    @Test
-    fun testCalculatePowerExample2Game5() {
-        val input = Pair(
-            5,
-            listOf(
-                listOf(Pair(Color.GREEN, 3), Pair(Color.RED, 6), Pair(Color.BLUE, 1)),
-                listOf(Pair(Color.RED, 1), Pair(Color.GREEN, 2), Pair(Color.BLUE, 2)),
-            )
-        )
-        val expected = 36
-
-        assertEquals(expected, calculatePower(input))
-    }
-}
+})

@@ -4,7 +4,7 @@ import uk.org.fca.adventofcode.Day
 import uk.org.fca.adventofcode.y2023.day7.Game
 import java.math.BigInteger
 
-class Day7: Day {
+class Day7: Day() {
     override fun part1Solution(data: List<String>): BigInteger {
         return Game.parse(data).winnings
     }
