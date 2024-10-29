@@ -24,6 +24,8 @@ class Day1: Day {
     override fun part2Solution(data: List<String>): BigInteger {
         return calibrate(data, true).toBigInteger()
     }
+
+    override val number get() = 1
 }
 
 fun calibrate(calibrationData: List<String>, handleStringNumbers: Boolean): Int

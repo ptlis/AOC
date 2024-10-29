@@ -15,4 +15,6 @@ class Day6: Day {
         val result = RaceResult.parse(data)
         return BigInteger.valueOf(result.winningStrategyCount.toLong())
     }
+
+    override val number get() = 6
 }

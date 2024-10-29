@@ -14,4 +14,6 @@ class Day5: Day {
     override fun part2Solution(data: List<String>): BigInteger {
         return BigInteger.valueOf(-1)
     }
+
+    override val number get() = 5
 }

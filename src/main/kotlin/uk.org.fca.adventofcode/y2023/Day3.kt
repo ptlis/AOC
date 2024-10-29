@@ -21,6 +21,8 @@ class Day3: Day {
     override fun part2Solution(data: List<String>): BigInteger {
         return findCogs(findPartNumbers(data.map { it.toCharArray() })).sumOf { it.ratio }.toBigInteger()
     }
+
+    override val number get() = 3
 }
 
 fun findCogs(partNumbers: List<PartNumber>): List<Cog> =

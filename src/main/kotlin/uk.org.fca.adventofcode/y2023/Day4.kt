@@ -12,4 +12,6 @@ class Day4: Day {
     override fun part2Solution(data: List<String>): BigInteger {
         return Scratchcards.parse(data).scratchCardCount
     }
+
+    override val number get() = 4
 }

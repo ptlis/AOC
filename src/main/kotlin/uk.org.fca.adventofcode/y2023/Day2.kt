@@ -30,6 +30,8 @@ class Day2: Day {
     override fun part2Solution(data: List<String>): BigInteger {
         return data.map { parseGameData(it) }.sumOf { calculatePower(it) }.toBigInteger()
     }
+
+    override val number get() = 2
 }
 
 fun calculatePower(game: Game): Int {

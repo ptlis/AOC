@@ -1,6 +1,7 @@
 package uk.org.fca.adventofcode
 
 import uk.org.fca.adventofcode.y2023.*
+import java.io.File
 import java.math.BigInteger
 import kotlin.time.measureTime
 
@@ -23,16 +24,14 @@ fun runDays(days: Map<Int, Day>) {
 }
 
 fun runDay(dayNumber: Int, day: Day) {
-    val dayData = object {}.javaClass.getResourceAsStream("/2023/day$dayNumber")?.bufferedReader()?.readLines() ?: listOf()
-
     var part1Solution: BigInteger
     val part1ExecutionTime = measureTime{
-        part1Solution = day.part1Solution(dayData)
+        part1Solution = day.part1Solution(day.getDayData())
     }
 
     var part2Solution: BigInteger
     val part2ExecutionTime = measureTime{
-        part2Solution = day.part2Solution(dayData)
+        part2Solution = day.part2Solution(day.getDayData())
     }
 
     println("Day $dayNumber Part 1: ${part1Solution.toString().padEnd(15)} ($part1ExecutionTime)")
