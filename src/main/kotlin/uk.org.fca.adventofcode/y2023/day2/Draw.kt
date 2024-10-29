@@ -6,6 +6,6 @@ data class Draw(val colourCounts: List<ColourCount>) {
     companion object {
         fun parse(data: String) = Draw(data.split(", ").map { ColourCount.parse(it) })
 
-        fun parseDraws(data: String): List<Draw> = data.split("; ").map { Draw.parse(it) }
+        fun parseDraws(data: String): List<Draw> = data.split("; ").map { parse(it) }
     }
 }

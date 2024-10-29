@@ -28,7 +28,7 @@ enum class HandType {
     abstract val rank: Int
 }
 
-enum class Card() {
+enum class Card {
     ACE {
         override val rank = 14
     },

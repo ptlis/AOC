@@ -5,7 +5,7 @@ import kotlin.math.min
 
 data class PartNumber(val startCoord: Coord, val number: Int, val symbol: Symbol) {
     companion object {
-        fun findPartNumber(engineLine: CharArray, symbol: Symbol, numberFoundPosition: Coord): PartNumber {
+        private fun findPartNumber(engineLine: CharArray, symbol: Symbol, numberFoundPosition: Coord): PartNumber {
             var startX = numberFoundPosition.x
             var endX = numberFoundPosition.x
 
@@ -32,7 +32,7 @@ data class PartNumber(val startCoord: Coord, val number: Int, val symbol: Symbol
             for (y in max(0, symbol.position.y - 1)..min(engine.size - 1, symbol.position.y + 1)) {
                 for (x in max(0, symbol.position.x - 1)..min(engine[y].size - 1, symbol.position.x + 1)) {
                     if (engine[y][x].isDigit()) {
-                        partNumbers.add(PartNumber.findPartNumber(engine[y], symbol, Coord(x, y)))
+                        partNumbers.add(findPartNumber(engine[y], symbol, Coord(x, y)))
                     }
                 }
             }

@@ -1,7 +1,6 @@
 package uk.org.fca.adventofcode
 
 import uk.org.fca.adventofcode.y2023.*
-import java.io.File
 import java.math.BigInteger
 import kotlin.time.measureTime
 
