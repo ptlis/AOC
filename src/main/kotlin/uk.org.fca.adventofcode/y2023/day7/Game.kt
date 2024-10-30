@@ -1,5 +1,6 @@
 package uk.org.fca.adventofcode.y2023.day7
 
+import uk.org.fca.adventofcode.y2023.day7.Card.Type
 import java.math.BigInteger
 
 data class Game(val hands: List<Hand>) {
@@ -14,8 +15,8 @@ data class Game(val hands: List<Hand>) {
     }
 
     companion object {
-        fun parse(game: List<String>): Game {
-            return Game(game.map { Hand.parse(it) })
+        fun parse(game: List<String>, jType: Type): Game {
+            return Game(game.map { Hand.parse(it, jType) })
         }
     }
 }

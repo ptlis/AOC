@@ -29,99 +29,41 @@ data class Hand(val cards: List<Card>, val bid: Int): Comparable<Hand> {
         abstract val rank: Int
     }
 
-    enum class Card {
-        ACE {
-            override val rank = 14
-        },
-        KING {
-            override val rank = 13
-        },
-        QUEEN {
-            override val rank = 12
-        },
-        JACK {
-            override val rank = 11
-        },
-        TEN {
-            override val rank = 10
-        },
-        NINE {
-            override val rank = 9
-        },
-        EIGHT {
-            override val rank = 8
-        },
-        SEVEN {
-            override val rank = 7
-        },
-        SIX {
-            override val rank = 6
-        },
-        FIVE {
-            override val rank = 5
-        },
-        FOUR {
-            override val rank = 4
-        },
-        THREE {
-            override val rank = 3
-        },
-        TWO {
-            override val rank = 2
-        };
-
-        abstract val rank: Int
-
-        companion object {
-            fun parse(card: Char): Card {
-                val mapping = mapOf(
-                    '2' to TWO,
-                    '3' to THREE,
-                    '4' to FOUR,
-                    '5' to FIVE,
-                    '6' to SIX,
-                    '7' to SEVEN,
-                    '8' to EIGHT,
-                    '9' to NINE,
-                    'T' to TEN,
-                    'J' to JACK,
-                    'Q' to QUEEN,
-                    'K' to KING,
-                    'A' to ACE
-                )
-
-                return mapping[card] ?: throw RuntimeException("Unknown card type \"$card\" encountered")
-            }
-        }
-    }
-
-    val rank get(): Int = cards.indices.sumOf { cards[it].rank * 13 * (cards.size - it) }
-
     val type get(): Type {
-        val groupedCards = cards.groupBy { it }.values.toList().sortedBy { it.size }.reversed()
+        val groupedCards = cards.groupBy { it.type }.toMutableMap()
+        val jokers = groupedCards[Card.Type.JOKER] ?: listOf()
+        groupedCards.remove(Card.Type.JOKER)
+
+        var processedCards = groupedCards.values.toList().sortedBy { it.size }.reversed().toMutableList()
+        if (processedCards.isEmpty()) {
+            processedCards.add(jokers)
+        }
+        else if (processedCards.first().size > 1) {
+            processedCards[0] = processedCards.first() + jokers
+        }
 
         return when {
             // Five of a kind, where all five cards have the same label: AAAAA
-            (groupedCards.size == 1) -> Type.FIVE_OF_A_KIND
+            (processedCards.size == 1) -> Type.FIVE_OF_A_KIND
 
             // Four of a kind, where four cards have the same label and one card has a different label: AA8AA
-            (groupedCards.size == 2 && groupedCards.first().size == 4) -> Type.FOUR_OF_A_KIND
+            (processedCards.size == 2 && processedCards.first().size == 4) -> Type.FOUR_OF_A_KIND
 
             // Full house, where three cards have the same label, and the remaining two cards share a different label:
             //  23332
-            (groupedCards.size == 2 && groupedCards.first().size == 3) -> Type.FULL_HOUSE
+            (processedCards.size == 2 && processedCards.first().size == 3) -> Type.FULL_HOUSE
 
             // Three of a kind, where three cards have the same label, and the remaining two cards are each different
             //  from any other card in the hand: TTT98
-            (groupedCards.size == 3 && groupedCards.first().size == 3) -> Type.THREE_OF_A_KIND
+            (processedCards.size == 3 && processedCards.first().size == 3) -> Type.THREE_OF_A_KIND
 
             // Two pair, where two cards share one label, two other cards share a second label, and the remaining card
             //  has a third label: 23432
-            (groupedCards.size == 3 && groupedCards.first().size == 2 && groupedCards.last().size == 1) -> Type.TWO_PAIR
+            (processedCards.size == 3 && processedCards.first().size == 2 && processedCards.last().size == 1) -> Type.TWO_PAIR
 
             // One pair, where two cards share one label, and the other three cards have a different label from the pair
             //  and each other: A23A4
-            (groupedCards.size == 4) -> Type.ONE_PAIR
+            (processedCards.size == 4) -> Type.ONE_PAIR
 
             // High card, where all cards' labels are distinct: 23456
             else -> Type.HIGH_CARD
@@ -129,9 +71,15 @@ data class Hand(val cards: List<Card>, val bid: Int): Comparable<Hand> {
     }
 
     override fun compareTo(other: Hand): Int {
-        val handType = type.rank.compareTo(other.type.rank)
-        if (handType != 0) {
-            return handType
+        val handTypeComparison = type.rank.compareTo(other.type.rank)
+        if (handTypeComparison != 0) {
+            return handTypeComparison
+        } else {
+            val thisJokers = this.cards.filter { it.type == Card.Type.JOKER }.size
+            val otherJokers = other.cards.filter { it.type == Card.Type.JOKER }.size
+            if (thisJokers != otherJokers) {
+                return otherJokers - thisJokers
+            }
         }
 
         // Bigger cards win
@@ -143,12 +91,16 @@ data class Hand(val cards: List<Card>, val bid: Int): Comparable<Hand> {
         return 0
     }
 
+    override fun toString(): String {
+        return cards.joinToString("") + " " + bid
+    }
+
     companion object {
-        fun parse(hand: String): Hand {
+        fun parse(hand: String, jIsType: Card.Type): Hand {
             val (cards, bid) = hand.split(" ")
 
             val handData = cards.toCharArray()
-            return Hand(handData.map { Card.parse(it) }, bid.toInt())
+            return Hand(handData.map { Card.parse(it, jIsType) }, bid.toInt())
         }
     }
 }
