@@ -5,12 +5,12 @@ import uk.org.fca.adventofcode.y2023.day4.Scratchcards
 import java.math.BigInteger
 
 class Day4: Day() {
-    override fun part1Solution(data: List<String>): BigInteger {
-        return Scratchcards.parse(data).points
+    override fun part1Solution(): BigInteger {
+        return Scratchcards.parse(dayData).points
     }
 
-    override fun part2Solution(data: List<String>): BigInteger {
-        return Scratchcards.parse(data).scratchCardCount
+    override fun part2Solution(): BigInteger {
+        return Scratchcards.parse(dayData).scratchCardCount
     }
 
     override val number get() = 4

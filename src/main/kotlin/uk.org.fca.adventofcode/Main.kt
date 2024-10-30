@@ -5,32 +5,37 @@ import java.math.BigInteger
 import kotlin.time.measureTime
 
 fun main () {
-    runDays(mapOf(
-        1 to Day1(),
-        2 to Day2(),
-        3 to Day3(),
-        4 to Day4(),
-        5 to Day5(),
-        6 to Day6(),
-        7 to Day7()
-    ))
+    runDays(listOf(
+        Day1(),
+        Day2(),
+        Day3(),
+        Day4(),
+        Day5(),
+        Day6(),
+        Day7()
+    ).associateBy { it.number })
 }
 
 fun runDays(days: Map<Int, Day>) {
-    for (entry in days.entries) {
-        runDay(entry.key, entry.value)
+    val totalExecutionTime = measureTime {
+        for (entry in days.entries) {
+            runDay(entry.key, entry.value)
+        }
     }
+
+    println("")
+    println("Total execution time: $totalExecutionTime")
 }
 
 fun runDay(dayNumber: Int, day: Day) {
     var part1Solution: BigInteger
     val part1ExecutionTime = measureTime{
-        part1Solution = day.part1Solution(day.getDayData())
+        part1Solution = day.part1Solution()
     }
 
     var part2Solution: BigInteger
     val part2ExecutionTime = measureTime{
-        part2Solution = day.part2Solution(day.getDayData())
+        part2Solution = day.part2Solution()
     }
 
     println("Day $dayNumber Part 1: ${part1Solution.toString().padEnd(15)} ($part1ExecutionTime)")

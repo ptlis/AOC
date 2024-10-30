@@ -5,13 +5,13 @@ import java.math.BigInteger
 import uk.org.fca.adventofcode.y2023.day5.Almanac
 
 class Day5: Day() {
-    override fun part1Solution(data: List<String>): BigInteger {
-        val almanac = Almanac.parse(data)
+    override fun part1Solution(): BigInteger {
+        val almanac = Almanac.parse(dayData)
 
         return almanac.seeds.minOf { almanac.mapSeedToLocation(it) }
     }
 
-    override fun part2Solution(data: List<String>): BigInteger {
+    override fun part2Solution(): BigInteger {
         return BigInteger.valueOf(-1)
     }
 
