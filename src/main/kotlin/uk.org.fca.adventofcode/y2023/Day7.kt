@@ -11,7 +11,8 @@ class Day7: Day() {
     }
 
     override fun part2Solution(): BigInteger {
-        return Game.parse(dayData, Card.Type.JOKER).winnings
+//        return Game.parse(dayData, Card.Type.JOKER).winnings
+        return BigInteger.valueOf(-1)
     }
 
     override val number get() = 7

@@ -6,7 +6,7 @@ import java.math.BigInteger
 
 class Day8: Day() {
     override fun part1Solution(): BigInteger {
-        return NavigationInstructions.parse(dayData).navigate("AAA", "ZZZ")
+        return NavigationInstructions.parse(dayData).navigate()
     }
 
     override fun part2Solution(): BigInteger {

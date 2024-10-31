@@ -3,10 +3,10 @@ package uk.org.fca.adventofcode.y2023.day8
 import java.lang.RuntimeException
 
 data class Network(val nodes: Map<String, Node>) {
-    data class Node(val id: String, val nextLeftId: String, val nextRightId: String) {
+    data class Node(val id: String, val leftId: String, val rightId: String) {
         fun getNextId(instruction: Char): String = when (instruction) {
-            'L' -> nextLeftId
-            'R' -> nextRightId
+            'L' -> leftId
+            'R' -> rightId
             else -> throw RuntimeException("Only 'L' or 'R' are valid instructions")
         }
 

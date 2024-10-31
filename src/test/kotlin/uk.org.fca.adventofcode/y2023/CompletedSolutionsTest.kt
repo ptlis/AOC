@@ -22,18 +22,19 @@ class CompletedSolutionsTest: FunSpec({
         CompletedSolution(Day4(), BigInteger.valueOf(21158), BigInteger.valueOf(6050769)),
         CompletedSolution(Day5(), BigInteger.valueOf(825516882), BigInteger.valueOf(-1)),
         CompletedSolution(Day6(), BigInteger.valueOf(128700), BigInteger.valueOf(39594072)),
-        CompletedSolution(Day7(), BigInteger.valueOf(253910319), BigInteger.valueOf(254083736)) // Answer to part 2 calculated with someone else's solution to make testing easier
+        CompletedSolution(Day7(), BigInteger.valueOf(253910319), BigInteger.valueOf(-1)),
+        CompletedSolution(Day8(), BigInteger.valueOf(12643), BigInteger.valueOf(-1))
     )
 
     context("Test completed solutions (part 1)") {
         withData(completedSolutions.associateBy { "$it part 1" }) {
-            completedSolution -> completedSolution.day.part1Solution(completedSolution.day.getDayData()) shouldBeEqual completedSolution.part1Solution
+            completedSolution -> completedSolution.day.part1Solution() shouldBeEqual completedSolution.part1Solution
         }
     }
 
     context("Test completed solutions (part 2)") {
         withData(completedSolutions.associateBy { "$it part 2" }) {
-                completedSolution -> completedSolution.day.part2Solution(completedSolution.day.getDayData()) shouldBeEqual completedSolution.part2Solution
+            completedSolution -> completedSolution.day.part2Solution() shouldBeEqual completedSolution.part2Solution
         }
     }
 })

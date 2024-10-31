@@ -10,21 +10,42 @@ data class NavigationInstructions(val instructions: Instructions, val network: N
             val instruction = instructions.get(index)
             index++
             if (index >= instructions.length) {
-                index = 0
+                reset()
             }
             return instruction
         }
+
+        fun reset() {
+            index = 0
+        }
     }
 
-    fun navigate(startId: String, targetId: String): BigInteger {
-        var node = network.nodes[startId]
+    fun navigate(): BigInteger {
+        var node = network.nodes["AAA"]
         var count = BigInteger.ZERO
 
-        while (node!!.id != targetId) {
+        while (node!!.id != "ZZZ") {
             node = network.nodes[node.getNextId(instructions.next)]
             count++
         }
         return count
+    }
+
+    fun ghostNavigate(): BigInteger {
+        var nodes = network.nodes.values.filter { it.id.last() == 'A' }
+        var count = BigInteger.ZERO
+
+        while (!allAtDestination(nodes)) {
+            count++
+            val nextInstruction = instructions.next
+            nodes = nodes.map { network.nodes[it.getNextId(nextInstruction)]!! }
+        }
+
+        return count
+    }
+
+    private fun allAtDestination(nodes: List<Network.Node>): Boolean {
+        return nodes.filter { it.id.last() == 'Z' }.size == nodes.size
     }
 
     companion object {
