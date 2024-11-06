@@ -12,6 +12,7 @@ import uk.org.fca.adventofcode.y2023.day5.Day5
 import uk.org.fca.adventofcode.y2023.day6.Day6
 import uk.org.fca.adventofcode.y2023.day7.Day7
 import uk.org.fca.adventofcode.y2023.day8.Day8
+import uk.org.fca.adventofcode.y2023.day9.Day9
 import java.math.BigInteger
 
 class CompletedSolutionsTest: FunSpec({
@@ -32,6 +33,7 @@ class CompletedSolutionsTest: FunSpec({
         CompletedSolution(Day6(), BigInteger.valueOf(128700), BigInteger.valueOf(39594072)),
         CompletedSolution(Day7(), BigInteger.valueOf(253910319), BigInteger.valueOf(-1)),
         CompletedSolution(Day8(), BigInteger.valueOf(12643), BigInteger.valueOf(-1)),
+        CompletedSolution(Day9(), BigInteger.valueOf(-1), BigInteger.valueOf(-1)),
     )
 
     context("Test completed solutions (part 1)") {

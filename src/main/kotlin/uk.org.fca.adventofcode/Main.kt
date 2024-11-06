@@ -8,6 +8,7 @@ import uk.org.fca.adventofcode.y2023.day5.Day5
 import uk.org.fca.adventofcode.y2023.day6.Day6
 import uk.org.fca.adventofcode.y2023.day7.Day7
 import uk.org.fca.adventofcode.y2023.day8.Day8
+import uk.org.fca.adventofcode.y2023.day9.Day9
 import java.math.BigInteger
 import kotlin.time.measureTime
 
@@ -21,6 +22,7 @@ fun main () {
         Day6(),
         Day7(),
         Day8(),
+        Day9(),
     ).associateBy { it.number })
 }
 
