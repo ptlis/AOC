@@ -1,19 +1,26 @@
 package uk.org.fca.adventofcode
 
-import uk.org.fca.adventofcode.y2023.*
+import uk.org.fca.adventofcode.y2023.day1.Day1
+import uk.org.fca.adventofcode.y2023.day2.Day2
+import uk.org.fca.adventofcode.y2023.day3.Day3
+import uk.org.fca.adventofcode.y2023.day4.Day4
+import uk.org.fca.adventofcode.y2023.day5.Day5
+import uk.org.fca.adventofcode.y2023.day6.Day6
+import uk.org.fca.adventofcode.y2023.day7.Day7
+import uk.org.fca.adventofcode.y2023.day8.Day8
 import java.math.BigInteger
 import kotlin.time.measureTime
 
 fun main () {
     runDays(listOf(
-//        Day1(),
-//        Day2(),
-//        Day3(),
-//        Day4(),
-//        Day5(),
-//        Day6(),
-//        Day7(),
-        Day8()
+        Day1(),
+        Day2(),
+        Day3(),
+        Day4(),
+        Day5(),
+        Day6(),
+        Day7(),
+        Day8(),
     ).associateBy { it.number })
 }
 

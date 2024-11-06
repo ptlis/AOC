@@ -1,8 +1,6 @@
-package uk.org.fca.adventofcode.y2023
+package uk.org.fca.adventofcode.y2023.day3
 
 import uk.org.fca.adventofcode.Day
-import uk.org.fca.adventofcode.y2023.day3.Cog
-import uk.org.fca.adventofcode.y2023.day3.PartNumber
 import java.math.BigInteger
 
 class Day3: Day() {

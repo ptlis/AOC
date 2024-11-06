@@ -1,9 +1,6 @@
-package uk.org.fca.adventofcode.y2023
+package uk.org.fca.adventofcode.y2023.day6
 
 import uk.org.fca.adventofcode.Day
-import uk.org.fca.adventofcode.y2023.day5.Almanac
-import uk.org.fca.adventofcode.y2023.day6.RaceResult
-import uk.org.fca.adventofcode.y2023.day6.RaceResults
 import java.math.BigInteger
 
 class Day6: Day() {

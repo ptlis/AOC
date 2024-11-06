@@ -1,9 +1,7 @@
-package uk.org.fca.adventofcode.y2023
+package uk.org.fca.adventofcode.y2023.day1
 
 import uk.org.fca.adventofcode.Day
-import uk.org.fca.adventofcode.y2023.day1.Calibration
 import java.math.BigInteger
-
 
 class Day1: Day() {
     override fun part1Solution(): BigInteger {

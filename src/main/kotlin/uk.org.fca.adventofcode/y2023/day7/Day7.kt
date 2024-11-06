@@ -1,8 +1,6 @@
-package uk.org.fca.adventofcode.y2023
+package uk.org.fca.adventofcode.y2023.day7
 
 import uk.org.fca.adventofcode.Day
-import uk.org.fca.adventofcode.y2023.day7.Card
-import uk.org.fca.adventofcode.y2023.day7.Game
 import java.math.BigInteger
 
 class Day7: Day() {
