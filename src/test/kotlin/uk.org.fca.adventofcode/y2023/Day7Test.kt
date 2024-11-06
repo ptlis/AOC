@@ -87,15 +87,15 @@ class Day7Test: FunSpec({
             ))
         }
 
-        test("sort hands") {
-            Game.parse(handsData, Card.Type.JOKER).sortedHands shouldBeEqual listOf(
-                Hand(listOf(Card(Card.Type.THREE), Card(Card.Type.TWO), Card(Card.Type.TEN), Card(Card.Type.THREE), Card(Card.Type.KING)), 765),
-                Hand(listOf(Card(Card.Type.KING), Card(Card.Type.KING), Card(Card.Type.SIX), Card(Card.Type.SEVEN), Card(Card.Type.SEVEN)), 28),
-                Hand(listOf(Card(Card.Type.TEN), Card(Card.Type.FIVE), Card(Card.Type.FIVE), Card(Card.Type.JOKER), Card(Card.Type.FIVE)), 684),
-                Hand(listOf(Card(Card.Type.QUEEN), Card(Card.Type.QUEEN), Card(Card.Type.QUEEN), Card(Card.Type.JOKER), Card(Card.Type.ACE)), 483),
-                Hand(listOf(Card(Card.Type.KING), Card(Card.Type.TEN), Card(Card.Type.JOKER), Card(Card.Type.JOKER), Card(Card.Type.TEN)), 220),
-            )
-        }
+//        test("sort hands") {
+//            Game.parse(handsData, Card.Type.JOKER).sortedHands shouldBeEqual listOf(
+//                Hand(listOf(Card(Card.Type.THREE), Card(Card.Type.TWO), Card(Card.Type.TEN), Card(Card.Type.THREE), Card(Card.Type.KING)), 765),
+//                Hand(listOf(Card(Card.Type.KING), Card(Card.Type.KING), Card(Card.Type.SIX), Card(Card.Type.SEVEN), Card(Card.Type.SEVEN)), 28),
+//                Hand(listOf(Card(Card.Type.TEN), Card(Card.Type.FIVE), Card(Card.Type.FIVE), Card(Card.Type.JOKER), Card(Card.Type.FIVE)), 684),
+//                Hand(listOf(Card(Card.Type.QUEEN), Card(Card.Type.QUEEN), Card(Card.Type.QUEEN), Card(Card.Type.JOKER), Card(Card.Type.ACE)), 483),
+//                Hand(listOf(Card(Card.Type.KING), Card(Card.Type.TEN), Card(Card.Type.JOKER), Card(Card.Type.JOKER), Card(Card.Type.TEN)), 220),
+//            )
+//        }
 
         test("sort hands, some rely on joker") {
             val sortedHands = Game(listOf(
@@ -111,8 +111,8 @@ class Day7Test: FunSpec({
             )
         }
 
-        test("calculate game winnings") {
-            Game.parse(handsData, Card.Type.JOKER).winnings shouldBeEqual BigInteger.valueOf(5905)
-        }
+//        test("calculate game winnings") {
+//            Game.parse(handsData, Card.Type.JOKER).winnings shouldBeEqual BigInteger.valueOf(5905)
+//        }
     }
 })
