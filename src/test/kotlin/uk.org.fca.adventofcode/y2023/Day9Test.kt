@@ -43,7 +43,19 @@ class Day9Test: FunSpec({
                 "Example 2" to Pair("1 3 6 10 15 21", BigInteger("28")),
                 "Example 3" to Pair("10 13 16 21 30 45", BigInteger("68")),
             )) {
-                data -> Day9().solveSingle(data.first) shouldBeEqual data.second
+                data -> Day9().solveSinglePart1(data.first) shouldBeEqual data.second
+            }
+        }
+    }
+
+    context("Part 2") {
+        context("Examples") {
+            withData(mapOf(
+                "Example 1" to Pair("0 3 6 9 12 15", BigInteger("-3")),
+                "Example 2" to Pair("1 3 6 10 15 21", BigInteger("0")),
+                "Example 3" to Pair("10 13 16 21 30 45", BigInteger("5")),
+            )) {
+                    data -> Day9().solveSinglePart2(data.first) shouldBeEqual data.second
             }
         }
     }
