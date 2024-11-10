@@ -1,5 +1,6 @@
 package uk.org.fca.adventofcode.y2023.day3
 
+import uk.org.fca.adventofcode.Common.Coord
 import kotlin.math.max
 import kotlin.math.min
 

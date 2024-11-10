@@ -3,7 +3,7 @@ package uk.org.fca.adventofcode.y2023
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import uk.org.fca.adventofcode.y2023.day3.Cog
-import uk.org.fca.adventofcode.y2023.day3.Coord
+import uk.org.fca.adventofcode.Common.Coord
 import uk.org.fca.adventofcode.y2023.day3.PartNumber
 import uk.org.fca.adventofcode.y2023.day3.Symbol
 

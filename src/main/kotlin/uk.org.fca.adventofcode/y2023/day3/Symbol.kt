@@ -1,5 +1,7 @@
 package uk.org.fca.adventofcode.y2023.day3
 
+import uk.org.fca.adventofcode.Common.Coord
+
 data class Symbol(val position: Coord, val symbol: Char) {
     companion object {
         fun findSymbols(engine: List<CharArray>): List<Symbol> {

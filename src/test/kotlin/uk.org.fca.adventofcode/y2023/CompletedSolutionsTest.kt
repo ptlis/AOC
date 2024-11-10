@@ -5,6 +5,7 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.equals.shouldBeEqual
 import uk.org.fca.adventofcode.Day
 import uk.org.fca.adventofcode.y2023.day1.Day1
+import uk.org.fca.adventofcode.y2023.day10.Day10
 import uk.org.fca.adventofcode.y2023.day2.Day2
 import uk.org.fca.adventofcode.y2023.day3.Day3
 import uk.org.fca.adventofcode.y2023.day4.Day4
@@ -34,6 +35,7 @@ class CompletedSolutionsTest: FunSpec({
         CompletedSolution(Day7(), BigInteger.valueOf(253910319), BigInteger.valueOf(-1)),
         CompletedSolution(Day8(), BigInteger.valueOf(12643), BigInteger.valueOf(-1)),
         CompletedSolution(Day9(), BigInteger.valueOf(1684566095), BigInteger.valueOf(1136)),
+        CompletedSolution(Day10(), BigInteger.valueOf(6778), BigInteger.valueOf(-1)),
     )
 
     context("Test completed solutions (part 1)") {
