@@ -10,7 +10,7 @@ class Day10: Day() {
     }
 
     override fun part2Solution(): BigInteger {
-        return BigInteger.valueOf(-1)
+        return BigInteger.valueOf(Maze.parse(dayData).insideCoords.size.toLong())
     }
 
     override val number: Int get() = 10

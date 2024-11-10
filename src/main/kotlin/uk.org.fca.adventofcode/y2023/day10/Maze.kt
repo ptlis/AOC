@@ -40,7 +40,7 @@ data class Maze(val grid: List<List<Symbol>>) {
         }
     }
 
-    val startCoord get(): Coord {
+    private val startCoord get(): Coord {
         for (y in grid.indices) {
             for (x in grid[y].indices) {
                 val value = grid[y][x]
@@ -53,7 +53,7 @@ data class Maze(val grid: List<List<Symbol>>) {
         throw RuntimeException("Unable to find maze start")
     }
 
-    fun validCoord(coord: Coord): Boolean {
+    private fun validCoord(coord: Coord): Boolean {
         return coord.y >= 0 && coord.y < grid.size && coord.x >= 0 && coord.x < grid[coord.y].size
     }
 
@@ -82,25 +82,38 @@ data class Maze(val grid: List<List<Symbol>>) {
         )
     }
 
-    fun findConnectingAdjacents(source: Coord): Pair<Coord, Coord> {
+    fun findConnectingAdjacents(source: Coord): Map<Direction, Coord> {
         val adjacents = mapOf(
             Direction.NORTH to source.north,
             Direction.EAST to source.east,
             Direction.SOUTH to source.south,
             Direction.WEST to source.west,
-        ).filter { includeAdjacent(source, it.key) }.values.toList()
+        ).filter { includeAdjacent(source, it.key) }
 
         if (adjacents.size != 2) {
             throw RuntimeException("Wrong number of adjacents, found $adjacents")
         }
 
-        return Pair(adjacents[0], adjacents[1])
+        return adjacents
+    }
+
+    fun getCoordsInPathLoop(): Set<Coord> {
+        val startAdjacents = findConnectingAdjacents(this.startCoord).values.toList()
+        val coordsFromSideOne = mutableListOf(this.startCoord, startAdjacents[0])
+        val coordsFromSideTwo = mutableListOf(this.startCoord, startAdjacents[1])
+
+        while (!coordsFromSideOne.contains(coordsFromSideTwo.last()) && !coordsFromSideTwo.contains(coordsFromSideOne.last())) {
+            coordsFromSideOne.add(findNextStep(coordsFromSideOne))
+            coordsFromSideTwo.add(findNextStep(coordsFromSideTwo))
+        }
+
+        return (coordsFromSideOne + coordsFromSideTwo).toSet()
     }
 
     val stepsFromStartToFurthestPoint get(): Int {
-        val startAdjacents = findConnectingAdjacents(this.startCoord)
-        val coordsFromSideOne = mutableListOf(this.startCoord, startAdjacents.first)
-        val coordsFromSideTwo = mutableListOf(this.startCoord, startAdjacents.second)
+        val startAdjacents = findConnectingAdjacents(this.startCoord).values.toList()
+        val coordsFromSideOne = mutableListOf(this.startCoord, startAdjacents[0])
+        val coordsFromSideTwo = mutableListOf(this.startCoord, startAdjacents[1])
 
         while (!coordsFromSideOne.contains(coordsFromSideTwo.last()) && !coordsFromSideTwo.contains(coordsFromSideOne.last())) {
             coordsFromSideOne.add(findNextStep(coordsFromSideOne))
@@ -111,10 +124,171 @@ data class Maze(val grid: List<List<Symbol>>) {
     }
 
     private fun findNextStep(previousCoords: List<Coord>): Coord {
-        val adjacents = findConnectingAdjacents(previousCoords.last())
+        val adjacents = findConnectingAdjacents(previousCoords.last()).values.toList()
 
-        return if (previousCoords.contains(adjacents.first)) adjacents.second else adjacents.first
+        return if (previousCoords.contains(adjacents[0])) adjacents[1] else adjacents[0]
+    }
 
+    val insideCoords get(): List<Coord> {
+        // Create grid 3x the size of pipe grid & map pipe shapes directly onto this
+        val insideOutsideGrid = MutableList(grid.size * 3) { MutableList(grid[0].size * 3) { ' ' } }
+        val loopCoords = getCoordsInPathLoop()
+
+        loopCoords.forEach {
+            val insideOutsideY = 3 * it.y
+            val insideOutsideX = 3 * it.x
+
+            when (grid[it.y][it.x]) {
+                Symbol.GROUND -> {
+                    // Do nothing for ground, this path will never be called
+                }
+
+                Symbol.START -> {
+                    val adjacents = findConnectingAdjacents(Coord(it.x, it.y))
+
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 1] = 'p'
+                    if (adjacents[Direction.NORTH] != null) {
+                        insideOutsideGrid[insideOutsideY + 0][insideOutsideX + 1] = 'p'
+                    }
+
+                    if (adjacents[Direction.EAST] != null) {
+                        insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 2] = 'p'
+                    }
+
+                    if (adjacents[Direction.SOUTH] != null) {
+                        insideOutsideGrid[insideOutsideY + 2][insideOutsideX + 1] = 'p'
+                    }
+
+                    if (adjacents[Direction.WEST] != null) {
+                        insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 0] = 'p'
+                    }
+                }
+
+                Symbol.VERTICAL -> {
+                    insideOutsideGrid[insideOutsideY + 0][insideOutsideX + 1] = 'p'
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 1] = 'p'
+                    insideOutsideGrid[insideOutsideY + 2][insideOutsideX + 1] = 'p'
+                }
+
+                Symbol.HORIZONTAL -> {
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 0] = 'p'
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 1] = 'p'
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 2] = 'p'
+                }
+
+                Symbol.NORTH_EAST -> {
+                    insideOutsideGrid[insideOutsideY + 0][insideOutsideX + 1] = 'p'
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 1] = 'p'
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 2] = 'p'
+                }
+
+                Symbol.NORTH_WEST -> {
+                    insideOutsideGrid[insideOutsideY + 0][insideOutsideX + 1] = 'p'
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 1] = 'p'
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 0] = 'p'
+                }
+
+                Symbol.SOUTH_WEST -> {
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 0] = 'p'
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 1] = 'p'
+                    insideOutsideGrid[insideOutsideY + 2][insideOutsideX + 1] = 'p'
+                }
+
+                Symbol.SOUTH_EAST -> {
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 1] = 'p'
+                    insideOutsideGrid[insideOutsideY + 1][insideOutsideX + 2] = 'p'
+                    insideOutsideGrid[insideOutsideY + 2][insideOutsideX + 1] = 'p'
+                }
+            }
+        }
+
+        val fillStart = outsideCoord
+        if (fillStart != null) {
+            floodFill(insideOutsideGrid, Coord(fillStart.x * 3, fillStart.y * 3))
+        } else {
+            throw NotImplementedError("Ohno, looks like I need to implement a mechanism to find an inside coord instead")
+        }
+
+        val insideCoords = mutableListOf<Coord>()
+        for (y in grid.indices) {
+            for (x in grid[y].indices) {
+                if (insideOutsideGrid[(y * 3) + 1][(x * 3) + 1] == ' ') {
+                    insideCoords.add(Coord(x, y))
+                }
+            }
+        }
+
+        return insideCoords
+    }
+
+    private fun floodFill(
+        insideOutsideGrid: MutableList<MutableList<Char>>,
+        startCoord: Coord
+    ) {
+        val stack = ArrayDeque<Coord>()
+        stack.addFirst(startCoord)
+
+        while (stack.isNotEmpty()) {
+            val currentCoord = stack.removeFirst()
+
+            if (
+                insideOutsideGrid[currentCoord.y][currentCoord.x] == ' '
+                ) {
+                insideOutsideGrid[currentCoord.y][currentCoord.x] = '.'
+                if (
+                    currentCoord.north.y >= 0 && currentCoord.north.y < insideOutsideGrid.size
+                    && currentCoord.north.x >= 0 && currentCoord.north.x < insideOutsideGrid[currentCoord.north.y].size
+                ) {
+                    stack.addFirst(currentCoord.north)
+                }
+                if (
+                    currentCoord.east.y >= 0 && currentCoord.east.y < insideOutsideGrid.size
+                    && currentCoord.east.x >= 0 && currentCoord.east.x < insideOutsideGrid[currentCoord.east.y].size
+                ) {
+                    stack.addFirst(currentCoord.east)
+                }
+                if (
+                    currentCoord.south.y >= 0 && currentCoord.south.y < insideOutsideGrid.size
+                    && currentCoord.south.x >= 0 && currentCoord.south.x < insideOutsideGrid[currentCoord.south.y].size
+                ) {
+                    stack.addFirst(currentCoord.south)
+                }
+                if (
+                    currentCoord.west.y >= 0 && currentCoord.west.y < insideOutsideGrid.size
+                    && currentCoord.west.x >= 0 && currentCoord.west.x < insideOutsideGrid[currentCoord.west.y].size
+                ) {
+                    stack.addFirst(currentCoord.west)
+                }
+            }
+        }
+    }
+
+    /**
+     * Find a coord outside the loop (by moving around the edges until it reaches a pipe), returns null if no outside
+     *  coord was found
+     */
+    private val outsideCoord get(): Coord? {
+        // Top & bottom edges
+        for (x in 0..<grid[0].size) {
+            if (grid[0][x] == Symbol.GROUND) {
+                return Coord(x, 0)
+            }
+            if (grid[grid.size - 1][x] == Symbol.GROUND) {
+                return Coord(x, grid.size - 1)
+            }
+        }
+
+        // Left & right edges
+        for (y in 1..<grid.size - 1) {
+            if (grid[y][0] == Symbol.GROUND) {
+                return Coord(0, y)
+            }
+            if (grid[y][grid[y].size - 1] == Symbol.GROUND) {
+                return Coord(grid[y].size - 1, y)
+            }
+        }
+
+        return null
     }
 
     companion object {
