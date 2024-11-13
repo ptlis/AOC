@@ -2,6 +2,7 @@ package uk.org.fca.adventofcode
 
 import uk.org.fca.adventofcode.y2023.day1.Day1
 import uk.org.fca.adventofcode.y2023.day10.Day10
+import uk.org.fca.adventofcode.y2023.day11.Day11
 import uk.org.fca.adventofcode.y2023.day2.Day2
 import uk.org.fca.adventofcode.y2023.day3.Day3
 import uk.org.fca.adventofcode.y2023.day4.Day4
@@ -25,6 +26,7 @@ fun main () {
         Day8(),
         Day9(),
         Day10(),
+        Day11(),
     ).associateBy { it.number })
 }
 

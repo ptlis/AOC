@@ -1,5 +1,7 @@
 package uk.org.fca.adventofcode.Common
 
+import kotlin.math.abs
+
 data class Coord(val x: Int, val y: Int) {
     val north get() = Coord(x, y - 1)
 
@@ -8,4 +10,8 @@ data class Coord(val x: Int, val y: Int) {
     val south get() = Coord(x, y + 1)
 
     val west get() = Coord(x - 1, y)
+
+    fun distanceTo(target: Coord) = abs(this.x - target.x) + abs(this.y - target.y)
+
+    override fun toString() = "$x,$y"
 }
