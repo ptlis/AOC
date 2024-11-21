@@ -37,7 +37,7 @@ class CompletedSolutionsTest: FunSpec({
         CompletedSolution(Day8(), BigInteger.valueOf(12643), BigInteger.valueOf(-1)),
         CompletedSolution(Day9(), BigInteger.valueOf(1684566095), BigInteger.valueOf(1136)),
         CompletedSolution(Day10(), BigInteger.valueOf(6778), BigInteger.valueOf(433)),
-        CompletedSolution(Day11(), BigInteger.valueOf(9724940), BigInteger.valueOf(-1)),
+        CompletedSolution(Day11(), BigInteger.valueOf(9724940), BigInteger.valueOf(569052586852)),
     )
 
     context("Test completed solutions (part 1)") {

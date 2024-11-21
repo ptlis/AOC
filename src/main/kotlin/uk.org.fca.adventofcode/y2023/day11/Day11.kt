@@ -5,11 +5,11 @@ import java.math.BigInteger
 
 class Day11: Day() {
     override fun part1Solution(): BigInteger {
-        return BigInteger.valueOf(Picture.parse(dayData).expanded.shortestGalaxyPaths.sum().toLong())
+        return Picture.parse(dayData, 1).expanded.shortestGalaxyPaths.sumOf { it }
     }
 
     override fun part2Solution(): BigInteger {
-        return BigInteger.valueOf(-1)
+        return Picture.parse(dayData, 1_000_000).expanded.shortestGalaxyPaths.sumOf { it }
     }
 
     override val number: Int
