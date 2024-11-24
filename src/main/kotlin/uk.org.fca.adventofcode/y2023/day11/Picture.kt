@@ -1,6 +1,6 @@
 package uk.org.fca.adventofcode.y2023.day11
 
-import uk.org.fca.adventofcode.Common.Coord
+import uk.org.fca.adventofcode.common.Coord
 import java.math.BigInteger
 import kotlin.math.max
 import kotlin.math.min

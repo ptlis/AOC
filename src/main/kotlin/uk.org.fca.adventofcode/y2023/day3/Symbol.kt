@@ -1,6 +1,6 @@
 package uk.org.fca.adventofcode.y2023.day3
 
-import uk.org.fca.adventofcode.Common.Coord
+import uk.org.fca.adventofcode.common.Coord
 
 data class Symbol(val position: Coord, val symbol: Char) {
     companion object {

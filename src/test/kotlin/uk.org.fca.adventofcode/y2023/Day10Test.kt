@@ -2,7 +2,7 @@ package uk.org.fca.adventofcode.y2023
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.equals.shouldBeEqual
-import uk.org.fca.adventofcode.Common.Coord
+import uk.org.fca.adventofcode.common.Coord
 import uk.org.fca.adventofcode.y2023.day10.Maze
 
 class Day10Test: FunSpec({

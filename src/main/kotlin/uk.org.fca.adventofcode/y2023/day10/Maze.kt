@@ -1,6 +1,6 @@
 package uk.org.fca.adventofcode.y2023.day10
 
-import uk.org.fca.adventofcode.Common.Coord
+import uk.org.fca.adventofcode.common.Coord
 import kotlin.RuntimeException
 
 data class Maze(val grid: List<List<Symbol>>) {

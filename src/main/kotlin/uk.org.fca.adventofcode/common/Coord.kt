@@ -1,4 +1,4 @@
-package uk.org.fca.adventofcode.Common
+package uk.org.fca.adventofcode.common
 
 import kotlin.math.abs
 
