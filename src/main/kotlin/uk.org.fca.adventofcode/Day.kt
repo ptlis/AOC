@@ -8,7 +8,9 @@ abstract class Day {
     abstract fun part2Solution(): BigInteger
     abstract val number: Int
 
-    val dayData get() = File("src/main/resources/2023/day$number").readLines()
+    val dayData get() = rawDayData.lines()
+
+    val rawDayData get() = File("src/main/resources/2023/day$number").readText()
 
     override fun toString(): String {
         return "day $number"

@@ -4,6 +4,7 @@ import uk.org.fca.adventofcode.y2023.day1.Day1
 import uk.org.fca.adventofcode.y2023.day10.Day10
 import uk.org.fca.adventofcode.y2023.day11.Day11
 import uk.org.fca.adventofcode.y2023.day12.Day12
+import uk.org.fca.adventofcode.y2023.day13.Day13
 import uk.org.fca.adventofcode.y2023.day2.Day2
 import uk.org.fca.adventofcode.y2023.day3.Day3
 import uk.org.fca.adventofcode.y2023.day4.Day4
@@ -29,6 +30,7 @@ fun main () {
         Day10(),
         Day11(),
         Day12(),
+        Day13(),
     ).associateBy { it.number })
 }
 
