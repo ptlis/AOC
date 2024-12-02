@@ -19,4 +19,10 @@ class Day2Test: FunSpec({
             Day2.solvePart1(Day2.parse(example1Data)) shouldBeEqual 2
         }
     }
+
+    context("Part 2") {
+        test("example 1 solution") {
+            Day2.solvePart2(Day2.parse(example1Data)) shouldBeEqual 4
+        }
+    }
 })

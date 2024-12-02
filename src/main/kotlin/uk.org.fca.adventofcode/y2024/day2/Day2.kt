@@ -12,7 +12,7 @@ class Day2: Day() {
     }
 
     override fun part2Solution(): BigInteger {
-        return BigInteger.valueOf(-1)
+        return BigInteger.valueOf(solvePart2(parse(dayData)).toLong())
     }
 
     override val year: Int get() = 2024
@@ -23,14 +23,30 @@ class Day2: Day() {
 
         fun solvePart1(locations: UnusualData): Int =
             locations
-                .map { levels -> levels.zipWithNext().map { it.first - it.second } }
-                .filter { levelsDiff ->
-                    val greaterThanZero = levelsDiff.filter { it >= 0 }
-                    greaterThanZero.size == levelsDiff.size || greaterThanZero.isEmpty()
-                }
-                .filter { levelsDiff ->
-                    levelsDiff.map { abs(it) }.none { it < 1 || it > 3 }
-                }
-                .size
+                .filter { isLevelValid(it) }.size
+
+        fun isLevelValid(levels: List<Int>): Boolean {
+            val levelDiffs = levels.zipWithNext().map { it.first - it.second }
+            val greaterThanZero = levelDiffs.filter { it >= 0 }
+            return (greaterThanZero.size == levelDiffs.size || greaterThanZero.isEmpty())
+                && (levelDiffs.map { abs(it) }.none { it < 1 || it > 3 })
+        }
+
+        fun solvePart2(locations: UnusualData): Int =
+            locations
+                .map { getValidVariants(it) }
+                .filter {
+                    !it.none { isLevelValid(it) }
+                }.size
+
+        fun getValidVariants(levels: List<Int>): List<List<Int>> {
+            val variants = mutableListOf(levels)
+            for (i in levels.indices) {
+                val variantList = levels.toMutableList()
+                variantList.removeAt(i)
+                variants.add(variantList.toList())
+            }
+            return variants
+        }
     }
 }

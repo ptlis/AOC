@@ -45,7 +45,7 @@ class CompletedSolutionsTest: FunSpec({
 
         // 2024
         CompletedSolution(Day1Year2024(), BigInteger.valueOf(2285373), BigInteger.valueOf(21142653)),
-        CompletedSolution(Day2Year2024(), BigInteger.valueOf(479), BigInteger.valueOf(-1)),
+        CompletedSolution(Day2Year2024(), BigInteger.valueOf(479), BigInteger.valueOf(531)),
     )
 
     context("Test completed solutions (part 1)") {
