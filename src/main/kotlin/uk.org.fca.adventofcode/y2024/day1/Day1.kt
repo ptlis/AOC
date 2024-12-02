@@ -35,10 +35,9 @@ class Day1: Day() {
         fun solvePart1(locations: LocationIdsList): Int =
             locations.first.sorted().zip(locations.second.sorted()).sumOf { abs(it.first - it.second) }
 
-        fun solvePart2(locations: LocationIdsList): Int {
-            return locations.first.filter { locations.second.contains(it) }.sorted().zip(
+        fun solvePart2(locations: LocationIdsList): Int =
+            locations.first.filter { locations.second.contains(it) }.sorted().zip(
                 locations.second.filter { locations.first.contains(it) }.sorted().groupBy { it }.map { it.value.size }
             ).sumOf { it.first * it.second }
-        }
     }
 }
