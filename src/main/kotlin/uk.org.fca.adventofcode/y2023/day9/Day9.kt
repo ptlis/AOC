@@ -60,5 +60,6 @@ class Day9: Day() {
         return firstValues.reduceRight { acc, value -> acc - value }
     }
 
-    override val number: Int get() = 9
+    override val day: Int get() = 9
+    override val year: Int get() = 2023
 }

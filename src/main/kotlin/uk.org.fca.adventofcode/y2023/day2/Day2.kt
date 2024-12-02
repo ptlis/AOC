@@ -18,5 +18,6 @@ class Day2: Day() {
         return dayData.map { Game.parse(it) }.sumOf { it.power }.toBigInteger()
     }
 
-    override val number get() = 2
+    override val day get() = 2
+    override val year: Int get() = 2023
 }

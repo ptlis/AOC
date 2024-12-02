@@ -13,5 +13,6 @@ class Day7: Day() {
         return BigInteger.valueOf(-1)
     }
 
-    override val number get() = 7
+    override val day get() = 7
+    override val year: Int get() = 2023
 }

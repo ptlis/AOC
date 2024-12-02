@@ -12,5 +12,6 @@ class Day4: Day() {
         return Scratchcards.parse(dayData).scratchCardCount
     }
 
-    override val number get() = 4
+    override val day get() = 4
+    override val year: Int get() = 2023
 }

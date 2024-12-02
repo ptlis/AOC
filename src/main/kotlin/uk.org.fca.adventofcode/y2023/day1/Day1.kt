@@ -12,5 +12,6 @@ class Day1: Day() {
         return Calibration.parse(dayData, true).values.sum().toBigInteger()
     }
 
-    override val number get() = 1
+    override val day get() = 1
+    override val year: Int get() = 2023
 }

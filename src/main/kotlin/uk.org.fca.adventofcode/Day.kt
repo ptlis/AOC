@@ -6,13 +6,14 @@ import java.math.BigInteger
 abstract class Day {
     abstract fun part1Solution(): BigInteger
     abstract fun part2Solution(): BigInteger
-    abstract val number: Int
+    abstract val day: Int
+    abstract val year: Int
 
-    val dayData get() = rawDayData.lines()
+    val dayData get() = rawDayData.lines().filter { it.isNotEmpty() }
 
-    val rawDayData get() = File("src/main/resources/2023/day$number").readText()
+    val rawDayData get() = File("src/main/resources/$year/day$day").readText()
 
     override fun toString(): String {
-        return "day $number"
+        return "$year, day $day"
     }
 }

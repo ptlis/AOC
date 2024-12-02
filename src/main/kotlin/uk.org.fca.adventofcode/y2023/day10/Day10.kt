@@ -13,5 +13,6 @@ class Day10: Day() {
         return BigInteger.valueOf(Maze.parse(dayData).insideCoords.size.toLong())
     }
 
-    override val number: Int get() = 10
+    override val day: Int get() = 10
+    override val year: Int get() = 2023
 }

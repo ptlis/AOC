@@ -14,5 +14,6 @@ class Day6: Day() {
         return BigInteger.valueOf(result.winningStrategyCount.toLong())
     }
 
-    override val number get() = 6
+    override val day get() = 6
+    override val year: Int get() = 2023
 }

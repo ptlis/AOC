@@ -12,5 +12,6 @@ class Day3: Day() {
         return Cog.findCogs(PartNumber.findPartNumbers(dayData.map { it.toCharArray() })).sumOf { it.ratio }.toBigInteger()
     }
 
-    override val number get() = 3
+    override val day get() = 3
+    override val year: Int get() = 2023
 }

@@ -12,6 +12,6 @@ class Day11: Day() {
         return Picture.parse(dayData, 1_000_000).expanded.shortestGalaxyPaths.sumOf { it }
     }
 
-    override val number: Int
-        get() = 11
+    override val day: Int get() = 11
+    override val year: Int get() = 2023
 }

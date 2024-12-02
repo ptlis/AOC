@@ -1,37 +1,40 @@
 package uk.org.fca.adventofcode
 
-import uk.org.fca.adventofcode.y2023.day1.Day1
-import uk.org.fca.adventofcode.y2023.day10.Day10
-import uk.org.fca.adventofcode.y2023.day11.Day11
-import uk.org.fca.adventofcode.y2023.day12.Day12
-import uk.org.fca.adventofcode.y2023.day13.Day13
-import uk.org.fca.adventofcode.y2023.day2.Day2
-import uk.org.fca.adventofcode.y2023.day3.Day3
-import uk.org.fca.adventofcode.y2023.day4.Day4
-import uk.org.fca.adventofcode.y2023.day5.Day5
-import uk.org.fca.adventofcode.y2023.day6.Day6
-import uk.org.fca.adventofcode.y2023.day7.Day7
-import uk.org.fca.adventofcode.y2023.day8.Day8
-import uk.org.fca.adventofcode.y2023.day9.Day9
+//import uk.org.fca.adventofcode.y2023.day1.Day1 as Day1Year2023
+//import uk.org.fca.adventofcode.y2023.day2.Day2 as Day2Year2023
+//import uk.org.fca.adventofcode.y2023.day3.Day3 as Day3Year2023
+//import uk.org.fca.adventofcode.y2023.day4.Day4 as Day4Year2023
+//import uk.org.fca.adventofcode.y2023.day5.Day5 as Day5Year2023
+//import uk.org.fca.adventofcode.y2023.day6.Day6 as Day6Year2023
+//import uk.org.fca.adventofcode.y2023.day7.Day7 as Day7Year2023
+//import uk.org.fca.adventofcode.y2023.day8.Day8 as Day8Year2023
+//import uk.org.fca.adventofcode.y2023.day9.Day9 as Day9Year2023
+//import uk.org.fca.adventofcode.y2023.day10.Day10 as Day10Year2023
+//import uk.org.fca.adventofcode.y2023.day11.Day11 as Day11Year2023
+//import uk.org.fca.adventofcode.y2023.day12.Day12 as Day12Year2023
+import uk.org.fca.adventofcode.y2024.day1.Day1 as Day1Year2024
 import java.math.BigInteger
 import kotlin.time.measureTime
 
 fun main () {
     runDays(listOf(
-        Day1(),
-        Day2(),
-        Day3(),
-        Day4(),
-        Day5(),
-        Day6(),
-        Day7(),
-        Day8(),
-        Day9(),
-        Day10(),
-        Day11(),
-        Day12(),
-        Day13(),
-    ).associateBy { it.number })
+        // 2023
+//        Day1Year2023(),
+//        Day2Year2023(),
+//        Day3Year2023(),
+//        Day4Year2023(),
+//        Day5Year2023(),
+//        Day6Year2023(),
+//        Day7Year2023(),
+//        Day8Year2023(),
+//        Day9Year2023(),
+//        Day10Year2023(),
+//        Day11Year2023(),
+//        Day12Year2023(),
+
+        // 2024
+        Day1Year2024(),
+    ).associateBy { it.day })
 }
 
 fun runDays(days: Map<Int, Day>) {
