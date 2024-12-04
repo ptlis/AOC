@@ -1,5 +1,6 @@
 package uk.org.fca.adventofcode.y2023.day13
 
+import uk.org.fca.adventofcode.common.rotateStringGrid
 import kotlin.math.max
 
 class Pattern(val puzzleLines: List<String>) {
@@ -40,22 +41,7 @@ class Pattern(val puzzleLines: List<String>) {
         return -1
     }
 
-    fun rotated(): List<String> {
-        val rotated: MutableList<MutableList<Char>> = mutableListOf()
-
-        for (x in puzzleLines[0].indices) {
-            rotated.add(mutableListOf())
-        }
-
-        for (y in puzzleLines.indices) {
-            val lineArray = puzzleLines[y].toCharArray()
-            for (x in lineArray.indices) {
-                rotated[x].add(lineArray[x])
-            }
-        }
-
-        return rotated.map { it.joinToString("") }.toList()
-    }
+    fun rotated(): List<String> = rotateStringGrid(puzzleLines)
 
     companion object {
         fun parse(data: String): List<Pattern> =data.split("\n\n").map { it.lines() }.map { Pattern(it) }

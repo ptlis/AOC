@@ -62,6 +62,6 @@ class Day3: Day() {
         private fun parseMultiplyStatements(multiplyStatements: List<String>): List<Pair<Int, Int>> =
             multiplyStatements
                 .map { "[0-9]{1,3}".toRegex().findAll(it).map { num -> num.value.toInt() } }
-                .map { Pair(it?.first()!!, it.last()) }
+                .map { Pair(it.first(), it.last()) }
     }
 }

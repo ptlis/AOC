@@ -1,4 +1,4 @@
-# Advent of Code 2024 Day 2: "Mull It Over"
+# Advent of Code 2024 Day 3: "Mull It Over"
 
 ## Part 1
 
