@@ -8,7 +8,7 @@ class Day5: Day() {
         BigInteger.valueOf(solvePart1(dayData).toLong())
 
     override fun part2Solution(): BigInteger =
-        BigInteger.valueOf(-1)
+        BigInteger.valueOf(solvePart2(dayData).toLong())
 
     override val day: Int get() = 5
     override val year: Int get() = 2024
@@ -29,6 +29,37 @@ class Day5: Day() {
             }
 
             return validPagesToProduce.sumOf { it[it.size / 2] }
+        }
+
+        fun solvePart2(rawData: List<String>): Int {
+            val rawPageOrderingRules = rawData.filter { it.length == 5 }
+            val rawPagesToProduce = rawData.filter { it.length > 5 }
+
+            val pageOrderingRules = rawPageOrderingRules.map { it.split('|').map { num -> num.toInt() } }
+            val pagesToProduce = rawPagesToProduce.map { it.split(',').map { num -> num.toInt() } }
+
+            val pageOrderingRulesByFirst = pageOrderingRules.groupBy({ it[0] }) { it[1] }
+            val pageOrderingRulesBySecond = pageOrderingRules.groupBy({ it[1] }) { it[0] }
+
+            val sortedPageOrder = pageOrderingRulesByFirst.toList()
+                .sortedBy { (_, value) -> value.size }
+                .reversed()
+                .map { it.first }
+                .toMutableList()
+            val remaining = pageOrderingRulesBySecond.keys.filter { !pageOrderingRulesByFirst.containsKey(it) }
+            if (remaining.isNotEmpty()) {
+                sortedPageOrder.add(remaining.last())
+            }
+
+            val inValidPagesToProduce = pagesToProduce.filter {
+                !isPagesToProduceValid(it, pageOrderingRulesByFirst, pageOrderingRulesBySecond)
+            }
+
+            val reOrderedPagesToProduce = inValidPagesToProduce.map { invalidPages ->
+                sortedPageOrder.filter { invalidPages.contains(it) }
+            }
+
+            return reOrderedPagesToProduce.sumOf { it[it.size / 2] }
         }
 
         fun isPagesToProduceValid(

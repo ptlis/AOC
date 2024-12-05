@@ -37,6 +37,14 @@ class Day5Test: FunSpec({
     """.trimIndent().lines()
 
     context("Part 1") {
-        Day5.solvePart1(example1Data) shouldBeEqual 143
+        test("Solve with example data") {
+            Day5.solvePart1(example1Data) shouldBeEqual 143
+        }
+    }
+
+    context("Part2") {
+        test("Solve with example data") {
+            Day5.solvePart2(example1Data) shouldBeEqual 123
+        }
     }
 })
