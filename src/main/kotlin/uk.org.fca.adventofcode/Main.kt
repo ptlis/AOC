@@ -17,6 +17,7 @@ import uk.org.fca.adventofcode.y2024.day2.Day2 as Day2Year2024
 import uk.org.fca.adventofcode.y2024.day3.Day3 as Day3Year2024
 import uk.org.fca.adventofcode.y2024.day4.Day4 as Day4Year2024
 import uk.org.fca.adventofcode.y2024.day5.Day5 as Day5Year2024
+import uk.org.fca.adventofcode.y2024.day6.Day6 as Day6Year2024
 import java.math.BigInteger
 import kotlin.time.measureTime
 
@@ -41,7 +42,8 @@ fun main () {
 //        Day2Year2024(),
 //        Day3Year2024(),
 //        Day4Year2024(),
-        Day5Year2024(),
+//        Day5Year2024(),
+        Day6Year2024(),
     ).associateBy { it.day })
 }
 

@@ -8,7 +8,7 @@ class Day5: Day() {
         BigInteger.valueOf(solvePart1(dayData).toLong())
 
     override fun part2Solution(): BigInteger =
-        BigInteger.valueOf(solvePart2(dayData).toLong())
+        BigInteger.valueOf(-1)
 
     override val day: Int get() = 5
     override val year: Int get() = 2024

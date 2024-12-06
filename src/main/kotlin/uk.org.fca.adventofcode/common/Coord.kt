@@ -14,4 +14,6 @@ data class Coord(val x: Int, val y: Int) {
     fun distanceTo(target: Coord) = abs(this.x - target.x) + abs(this.y - target.y)
 
     override fun toString() = "$x,$y"
+
+    operator fun plus(coord: Coord) = Coord(x + coord.x, y + coord.y)
 }
